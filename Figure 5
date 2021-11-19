@@ -1,0 +1,41 @@
+** Figure 5 - Reclassification plots with and without CAD for malignant and benign pulmonary nodules
+
+// lom1=malignancy risk estimate without CAD
+// lom2=malignancy risk estimate with CAD
+// cancer=benign vs malignant cases
+
+twoway (scatter lom2 lom1 if cancer==1, color(maroon) msymbol(t) msize(tiny)) || ///
+	(scatteri 0 0 100 100, connect(l) clwidth(thin) clpattern(solid) ///
+		msymbol(i) lcolor(olive_teal)), ///
+	title("{bf:A}", size(medium) ring(1) pos(11) margin(-10)) ///
+	ytitle("Malignancy risk with CAD, %", size(small)) ///
+	ylabel(0(10)100, labsize(small) angle(horizontal) format(%9.0g)) ///
+	xtitle("Malignancy risk without CAD, %", size(small)) ///
+	xscale(range(0 100)) ///
+	xlabel(0(10)100, angle(horizontal) labsize(small) labgap(tiny)) ///
+	xline(5 65, lcolor(gs10))	///
+	yline(5 65, lcolor(gs10)) ///
+	xsize(10) ysize(10) ///
+	legend(off) ///
+	plotregion(margin(0 0 0 0) lcolor(none)) ///
+	scheme(s1mono)
+graph copy fig1, replace
+	
+twoway (scatter lom2 lom1 if cancer==0, color(navy) msymbol(o) msize(tiny)) || ///
+	(scatteri 0 0 100 100, connect(l) clwidth(thin) clpattern(solid) msymbol(i) ///
+		lcolor(olive_teal)), ///
+	title("{bf:B}", size(medium) ring(1) pos(11) margin(-10)) ///
+	ytitle("Malignancy risk with CAD, %", size(small)) ///
+	ylabel(0(10)100, labsize(small) angle(horizontal) format(%9.0g)) ///
+	xtitle("Malignancy risk without CAD, %", size(small)) ///
+	xscale(range(0 100)) ///
+	xlabel(0(10)100, angle(horizontal) labsize(small) labgap(tiny)) ///
+	xline(5 65, lcolor(gs10))	///
+	yline(5 65, lcolor(gs10)) ///
+	xsize(10) ysize(10) ///
+	legend(off) ///
+	plotregion(margin(0 0 0 0) lcolor(none)) ///
+	scheme(s1mono)
+graph copy fig2, replace
+graph combine fig1 fig2, row(1) ysize(10) xsize(20) altshrink imargin(medium) ///
+	scheme(s1mono)
