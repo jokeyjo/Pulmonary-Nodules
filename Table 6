@@ -1,0 +1,161 @@
+*** Table 6 - Interobserver Agreement for Likelihood of Malignancy and Management ///
+				/// Recommendation with and without Computer-aided Diagnosis
+
+// index=case
+// reader=reader
+// lom1c=malignancy risk estimate category without CAD
+// lom2c=malignancy risk estimate category with CAD
+// lom1c1=very low (<5%) malignancy risk estimate category vs all other categories without CAD
+// lom2c1=very low (<5%) malignancy risk estimate category vs all other categories with CAD
+// lom1c2=low-moderate (5-30%) malignancy risk estimate category vs all other categories without CAD
+// lom2c2=low-moderate (5-30%) malignancy risk estimate category vs all other categories with CAD
+// lom1c3=moderate-high (31-65%) malignancy risk estimate category vs all other categories without CAD
+// lom2c3=moderate-high (31-65%) malignancy risk estimate category vs all other categories with CAD
+// lom1c4=high (>65%) malignancy risk estimate category vs all other categories without CAD
+// lom2c4=high (>65%) malignancy risk estimate category vs all other categories with CAD
+				
+**# Overall malignancy risk category agreement
+*Without CAD
+reshape wide lom1c, i(index) j(reader)
+kap lom1c1 lom1c2 lom1c3 lom1c4 lom1c5 lom1c6 lom1c7 lom1c8 lom1c9 lom1c10 ///
+	lom1c11 lom1c12
+kappaetc lom1c1 lom1c2 lom1c3 lom1c4 lom1c5 lom1c6 lom1c7 lom1c8 lom1c9 lom1c10 ///
+	lom1c11 lom1c12
+//0.3524 (SE: 0.0153)
+*With CAD
+reshape wide lom2c, i(index) j(reader)
+kap lom2c1 lom2c2 lom2c3 lom2c4 lom2c5 lom2c6 lom2c7 lom2c8 lom2c9 lom2c10 ///
+	lom2c11 lom2c12
+kappaetc lom2c1 lom2c2 lom2c3 lom2c4 lom2c5 lom2c6 lom2c7 lom2c8 lom2c9 lom2c10 ///
+	lom2c11 lom2c12
+//0.5757 (SE: 0.0152)
+*p-value
+di 2*(1-normal((0.5757-0.3524)/sqrt(0.0153^2 + 0.0152^2)))
+
+**# Very low (<5%) malignancy risk category agreement
+*Without CAD
+reshape wide lom1c1, i(index) j(reader)
+kappaetc lom1c11 lom1c12 lom1c13 lom1c14 lom1c15 lom1c16 lom1c17 lom1c18 lom1c19 lom1c110 ///
+	lom1c111 lom1c112
+//0.5004 (SE: 0.0238)
+*With CAD
+reshape wide lom2c1, i(index) j(reader)
+kappaetc lom2c11 lom2c12 lom2c13 lom2c14 lom2c15 lom2c16 lom2c17 lom2c18 lom2c19 ///
+	lom2c110 lom2c111 lom2c112
+//0.7112 (SE: 0.0201)
+*p-value
+di 2*(1-normal((0.7112-0.5004)/sqrt(0.0238^2 + 0.0201^2)))
+
+**# Low-moderate (5-30%) malignancy risk category agreement
+*Without CAD
+reshape wide lom1c2, i(index) j(reader)
+kappaetc lom1c21 lom1c22 lom1c23 lom1c24 lom1c25 lom1c26 lom1c27 lom1c28 lom1c29 ///
+	lom1c210 lom1c211 lom1c212
+//0.2147 (SE: 0.0165)
+*With CAD
+reshape wide lom2c2, i(index) j(reader)
+kappaetc lom2c21 lom2c22 lom2c23 lom2c24 lom2c25 lom2c26 lom2c27 lom2c28 lom2c29 ///
+	lom2c210 lom2c211 lom2c212
+//0.4465 (SE: 0.0264)
+*p-value
+di 2*(1-normal((0.4465-0.2147)/sqrt(0.0165^2 + 0.0147^2)))
+
+**# Moderate-high (31-65%) malignancy risk category agreement
+*Without CAD
+reshape wide lom1c3, i(index) j(reader)
+kappaetc lom1c31 lom1c32 lom1c33 lom1c34 lom1c35 lom1c36 lom1c37 lom1c38 lom1c39 ///
+	lom1c310 lom1c311 lom1c312
+//0.1087 (SE: 0.0118)
+*With CAD
+reshape wide lom2c3, i(index) j(reader)
+kappaetc lom2c31 lom2c32 lom2c33 lom2c34 lom2c35 lom2c36 lom2c37 lom2c38 lom2c39 ///
+	lom2c310 lom2c311 lom2c312
+//0.3639 (SE: 0.0208)
+*p-value
+di 2*(1-normal((0.3639-0.1087)/sqrt(0.0208^2 + 0.0118^2)))
+
+**# High (>65%) malignancy risk category agreement
+*Without CAD
+reshape wide lom1c4, i(index) j(reader)
+kappaetc lom1c41 lom1c42 lom1c43 lom1c44 lom1c45 lom1c46 lom1c47 lom1c48 lom1c49 ///
+	lom1c410 lom1c411 lom1c412
+//0.5367 (SE: 0.0255)
+*With CAD
+reshape wide lom2c4, i(index) j(reader)
+kappaetc lom2c41 lom2c42 lom2c43 lom2c44 lom2c45 lom2c46 lom2c47 lom2c48 lom2c49 ///
+	lom2c410 lom2c411 lom2c412
+//0.7143 (SE: 0.0229)
+*p-value
+di 2*(1-normal((0.7143-0.5367)/sqrt(0.0229^2 + 0.0255^2)))
+
+
+// index=case
+// reader=reader
+// dec1c=management recommendation category without CAD
+// dec2c=management recommendation category with CAD
+// dec1c1=no action vs both other management categories without CAD
+// dec2c1=no action vs both other management categories with CAD
+// dec1c2=CT surveillance vs both other management categories without CAD
+// dec2c2=CT surveillance vs both other management categories with CAD
+// dec1c3=diagnostic procedure vs both other management categories without CAD
+// dec2c3=diagnostic procedure vs both other management categories with CAD
+
+**# Overall management recommendation category agreement
+*Without CAD
+reshape wide dec1c, i(index) j(reader)
+kap dec1c1 dec1c2 dec1c3 dec1c4 dec1c5 dec1c6 dec1c7 dec1c8 dec1c9 dec1c10 ///
+	dec1c11 dec1c12
+kappaetc dec1c1 dec1c2 dec1c3 dec1c4 dec1c5 dec1c6 dec1c7 dec1c8 dec1c9 dec1c10 ///
+	dec1c11 dec1c12
+//0.4414 (SE: 0.0172)
+*With CAD
+reshape wide dec2c, i(index) j(reader)
+kap dec2c1 dec2c2 dec2c3 dec2c4 dec2c5 dec2c6 dec2c7 dec2c8 dec2c9 dec2c10 ///
+	dec2c11 dec2c12
+kappaetc dec2c1 dec2c2 dec2c3 dec2c4 dec2c5 dec2c6 dec2c7 dec2c8 dec2c9 dec2c10 ///
+	dec2c11 dec2c12
+//0.5222 (SE: 0.0159)
+*p-value
+di 2*(1-normal((0.5222-0.4414)/sqrt(0.0159^2 + 0.0172^2)))
+
+**# No action management recommendation category agreement
+*Without CAD 
+reshape wide dec1c1, i(index) j(reader)
+kappaetc dec1c11 dec1c12 dec1c13 dec1c14 dec1c15 dec1c16 dec1c17 dec1c18 dec1c19 ///
+	dec1c110 dec1c111 dec1c112
+//0.2236 (SE: 0.0226)
+*With CAD
+reshape wide dec2c1, i(index) j(reader)
+kappaetc dec2c11 dec2c12 dec2c13 dec2c14 dec2c15 dec2c16 dec2c17 dec2c18 dec2c19 ///
+	dec2c110 dec2c111 dec2c112
+//0.3165 (SE: 0.0204)
+*p-value
+di 2*(1-normal((0.3165-0.2236)/sqrt(0.0204^2 + 0.0226^2)))
+
+**# CT surveillance management recommendation category agreement
+*Without CAD
+reshape wide dec1c2, i(index) j(reader)
+kappaetc dec1c21 dec1c22 dec1c23 dec1c24 dec1c25 dec1c26 dec1c27 dec1c28 dec1c29 ///
+	dec1c210 dec1c211 dec1c212
+//0.3576 (SE: 0.0206)
+*With CAD
+reshape wide dec2c2, i(index) j(reader)
+kappaetc dec2c21 dec2c22 dec2c23 dec2c24 dec2c25 dec2c26 dec2c27 dec2c28 dec2c29 ///
+	dec2c210 dec2c211 dec2c212
+//0.4256 (SE: 0.0215)
+*p-value
+di 2*(1-normal((0.4256-0.3576)/sqrt(0.0215^2 + 0.0206^2)))
+
+**# Diagnostic procedure management recommendation category agreement
+*Without CAD
+reshape wide dec1c3, i(index) j(reader)
+kappaetc dec1c31 dec1c32 dec1c33 dec1c34 dec1c35 dec1c36 dec1c37 dec1c38 dec1c39 ///
+	dec1c310 dec1c311 dec1c312
+//0.5955 (SE: 0.0232)
+*With CAD
+reshape wide dec2c3, i(index) j(reader)
+kappaetc dec2c31 dec2c32 dec2c33 dec2c34 dec2c35 dec2c36 dec2c37 dec2c38 dec2c39 ///
+	dec2c310 dec2c311 dec2c312
+//0.6806 (SE: 0.0218)
+*p-value
+di 2*(1-normal((0.6806-0.5955)/sqrt(0.0218^2 + 0.0232^2)))
