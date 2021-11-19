@@ -1,0 +1,28 @@
+** Supplemental Figure 2 - Distribution of Lung Cancer Prediction scores by case diagnoses.
+
+// index=case
+// cancer=benign vs cancer case
+// op_score=LCP score
+
+bysort index: gen case_n=_n
+keep if case_n==1
+drop case_n
+label variable cancer "Lung Cancer Prediction score"
+gen op_n=op_score
+label define op_n 1 "{bf:1} (n=23)" 2 "{bf:2} (n=17)" 3 "{bf:3} (n=15)" ///
+	4 "{bf:4} (n=20)" 5 "{bf:5} (n=30)" 6 "{bf:6} (n=22)" 7 "{bf:7} (n=39)" ///
+	8 "{bf:8} (n=39)" 9 "{bf:9} (n=40)" 10 "{bf:10} (n=55)", replace
+label values op_n op_n
+
+catplot cancer, over(op_n) vertical asyvars percent(op_n) ///
+	legend(ring(1) pos(6) row(1) ///
+		lab(1 "Benign") lab(2 "Malignant") size(small)) ///
+	recast(bar) ///
+	xsize(14) ysize(7)										 ///
+	bar(1, bcolor(gs2) fintensity(inten20))	///
+	bar(2, bcolor(gs2) fintensity(inten90))	///
+	blabel(bar, format(%9.1f) size(vsmall))	///
+	ytitle("Cases, %", size(medium))				 ///
+	ylabel(0(10)100, labsize(small) nogrid)	///
+	plotregion(margin(0 0 0 0) lcolor(none)) ///
+	scheme(lean1)
