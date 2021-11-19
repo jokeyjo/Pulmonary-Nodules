@@ -1,0 +1,20 @@
+// cancer=benign vs malignant
+// age=age in years
+// male=female vs male
+// dia10=<10mm vs >=10mm
+// subsolid=solid vs part-solid
+// spiculated=non-spiculated vs spiculated
+// screening=diagnostic vs screening
+// thick=<1.5mm vs >=1.5mm
+// dx=malignant histologic category
+
+table1_mc, by(cancer) ///
+	vars(age conts \ ///
+	male cat \ ///
+	dia10 cat \ ///
+	subsolid cat \ ///
+	spiculated cat \ ///
+	screening cat \ ///
+	thick cat) ///
+	total(before) onecol missing format(%9.1g)
+tab dx if cancer==1
