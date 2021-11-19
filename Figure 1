@@ -1,0 +1,41 @@
+** Figure 1 - Description of the Lung Cancer Prediction score provided to readers
+
+clear
+set obs 10
+gen lcp=1
+label variable lcp "Lung Cancer Prediction score"
+replace lcp=sum(lcp)
+gen cancer=0.2 if lcp==1
+replace cancer=0.4 if lcp==2
+replace cancer=0.8 if lcp==3
+replace cancer=2.0 if lcp==4
+replace cancer=5.6 if lcp==5
+replace cancer=15.0 if lcp==6
+replace cancer=34.0 if lcp==7
+replace cancer=64.0 if lcp==8
+replace cancer=84.0 if lcp==9
+replace cancer=93.0 if lcp==10
+label variable cancer "% cancer"
+gen benign=(100-0.2) if lcp==1
+replace benign=(100-0.4) if lcp==2
+replace benign=(100-0.8) if lcp==3
+replace benign=(100-2.0) if lcp==4
+replace benign=(100-5.6) if lcp==5
+replace benign=(100-15) if lcp==6
+replace benign=(100-34) if lcp==7
+replace benign=(100-64) if lcp==8
+replace benign=(100-84) if lcp==9
+replace benign=(100-93) if lcp==10
+label variable benign "% benign"
+
+graph bar benign cancer, over(lcp) ///
+	blabel(total, pos(outside) format(%9.1f) size(vsmall)) ///
+	bar(1, color(gs2) fintensity(inten20)) ///
+	bar(2, color(gs2) fintensity(inten90)) ///
+	ytitle("Probability, %") ///
+	legend(ring(2) pos(6) row(1) ///
+		lab(1 "Benign") lab(2 "Malignant") size(small)) ///
+	note("Lung Cancer Prediction score", ring(1) size(medium) pos(6)) ///
+	ylabel(0(10)100, labsize(small) angle(horizontal) format(%9.0f) nogrid) ///
+	plotregion(margin(0 0 0 0) lcolor(none)) ///
+	scheme(s1mono)
