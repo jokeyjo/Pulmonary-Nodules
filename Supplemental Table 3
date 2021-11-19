@@ -1,0 +1,7 @@
+** Supplemental Table 3 - Contingency Table for Reader Malignancy Risk Estimates //
+	// without CAD by Reader Malignancy Risk Estimates with CAD
+	
+// lom1c=malignancy risk estimate category without CAD
+// lom2c=malignancy risk estimate category with CAD
+
+tab lom2c lom1c, miss col
