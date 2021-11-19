@@ -1,0 +1,47 @@
+** Figure 4 - Individual reader discrimination with and without computer-aided diagnosis (CAD)
+
+clear
+set obs 12
+gen reader=1
+replace reader=sum(reader)
+gen roc1=0.75 if reader==1
+replace roc1=0.80 if reader==2
+replace roc1=0.79 if reader==3
+replace roc1=0.77 if reader==4
+replace roc1=0.88 if reader==5
+replace roc1=0.83 if reader==6
+replace roc1=0.86 if reader==7
+replace roc1=0.81 if reader==8
+replace roc1=0.85 if reader==9
+replace roc1=0.82 if reader==10
+replace roc1=0.84 if reader==11
+replace roc1=0.85 if reader==12
+gen roc2=0.85 if reader==1
+replace roc2=0.88 if reader==2
+replace roc2=0.89 if reader==3
+replace roc2=0.89 if reader==4
+replace roc2=0.90 if reader==5
+replace roc2=0.89 if reader==6
+replace roc2=0.90 if reader==7
+replace roc2=0.88 if reader==8
+replace roc2=0.90 if reader==9
+replace roc2=0.90 if reader==10
+replace roc2=0.89 if reader==11
+replace roc2=0.88 if reader==12
+
+twoway (bar roc2 reader, bcolor(gs5) barw(0.6)) ///
+	(scatter roc2 reader, msymbol(none) mlabel(roc2) mlabposition(12) ///
+		mlabsize(vsmall) mlabcolor(black) mlabformat(%9.2f) mlabgap(tiny)) || ///
+	(bar roc1 reader, bcolor(gs13) barw(0.6)) ///
+	(scatter roc1 reader, msymbol(none) mlabel(roc1) mlabposition(6) ///
+		mlabsize(vsmall) mlabcolor(black) mlabformat(%9.2f) mlabgap(tiny)), ///
+	ytitle("AUC", size(vsmall)) ///
+	ylabel(0(0.1)1.0, labsize(vsmall) angle(horizontal) format(%9.2f)) ///
+	xtitle("Reader", size(vsmall)) ///
+	xscale(range(0 12)) ///
+	xlabel(1(1)12, angle(horizontal) labsize(vsmall) labgap(tiny)) ///
+	xsize(10) ysize(8) ///
+	legend(rows(1) pos(12) ring(1) size(vsmall) ///
+		order(1 "Improvement with CAD" 3 "Without CAD")) ///
+	plotregion(margin(0 0 0 0) lcolor(none)) ///
+	scheme(s1mono)
