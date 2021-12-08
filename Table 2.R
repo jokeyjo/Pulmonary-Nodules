@@ -45,7 +45,7 @@ m1b <- printfn(tms[2,'Estimate'],tms[2,'CI'][1],tms[2,'CI'][2],scale = 100)
 d1b <- printfn(tdsb$Estimate,tdsb$CI[,'Upper'],tdsb$CI[,'Lower'],scale = -100)
 
 ### comparison 
-diff = (tdsb$Estimate - tdsa$Estimate)*100
+diff = abs(tdsb$Estimate - tdsa$Estimate)*100
 std.err = sqrt(tdsa$StdErr^2 + tdsb$StdErr^2)
 dfs = tdsb$df + tdsa$df
 tstat = abs((diff/100)/std.err)
@@ -97,7 +97,7 @@ m1b <- printfn(tms[2,'Estimate'],tms[2,'CI'][1],tms[2,'CI'][2],scale = 100)
 d1b <- printfn(tdsb$Estimate,tdsa$CI[,'Upper'],tdsa$CI[,'Lower'],scale = -100)
 
 
-diff = (tdsb$Estimate - tdsa$Estimate)*100
+diff = abs(tdsb$Estimate - tdsa$Estimate)*100
 std.err = sqrt(tdsa$StdErr^2 + tdsb$StdErr^2)
 dfs = tdsb$df + tdsa$df
 tstat = abs((diff/100)/std.err)
@@ -107,7 +107,7 @@ pv = (1 - pt(tstat,dfs))*2
 ft2 = data.frame(Variable = c("5 to <10",">= 10 to <=30"), 
                  m0 = c(m0a,m0b), 
                  m1 = c(m1a,m1b),
-                 delta = c(d1b,d1a),
+                 delta = c(d1a,d1b),
                  diff = c(diff,diff),
                  p = c(pv,pv))
 
@@ -149,7 +149,7 @@ m0b <- printfn(tms[1,'Estimate'],tms[1,'CI'][1],tms[1,'CI'][2],scale = 100)
 m1b <- printfn(tms[2,'Estimate'],tms[2,'CI'][1],tms[2,'CI'][2],scale = 100)
 d1b <- printfn(tdsb$Estimate,tdsb$CI[,'Upper'],tdsb$CI[,'Lower'],scale = -100)
 
-diff = (tdsb$Estimate - tdsa$Estimate)*100
+diff = abs(tdsb$Estimate - tdsa$Estimate)*100
 std.err = sqrt(tdsa$StdErr^2 + tdsb$StdErr^2)
 pv = (1 - pnorm(abs((diff/100)/std.err)))*2
 
@@ -202,7 +202,7 @@ d1b <- printfn(tdsb$Estimate,tdsb$CI[,'Upper'],tdsb$CI[,'Lower'],scale = -100)
 
 
 ### 
-diff = (tdsa$Estimate - tdsb$Estimate)*100
+diff = abs(tdsa$Estimate - tdsb$Estimate)*100
 std.err = sqrt(tdsa$StdErr^2 + tdsb$StdErr^2)
 dfs = tdsb$df + tdsa$df
 tstat = abs((diff/100)/std.err)
@@ -211,7 +211,7 @@ pv = (1 - pt(tstat,dfs))*2
 ft4 = data.frame(Variable = c("Non-spiculated","Spiculated"), 
                  m0 = c(m0b,m0a),
                  m1 = c(m1b,m1a), 
-                 delta = c(d1a,d1b),
+                 delta = c(d1b,d1a),
                  diff = c(diff,diff),
                  p = c(pv,pv))
 
@@ -256,7 +256,7 @@ m1b <- printfn(tms[2,'Estimate'],tms[2,'CI'][1],tms[2,'CI'][2],scale = 100)
 d1b <- printfn(tdsb$Estimate,tdsb$CI[,'Upper'],tdsb$CI[,'Lower'],scale = -100)
 
 ### 
-diff = (tdsb$Estimate - tdsa$Estimate)*100
+diff = abs(tdsb$Estimate - tdsa$Estimate)*100
 std.err = sqrt(tdsa$StdErr^2 + tdsb$StdErr^2)
 dfs = tdsb$df + tdsa$df
 tstat = abs((diff/100)/std.err)
