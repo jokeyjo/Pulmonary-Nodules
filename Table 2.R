@@ -62,25 +62,8 @@ ft1 = data.frame(Variable = c("Pulmonology","Radiology"),
 # Nodule diameter -------------------------------------------------------------
 
 DT[,nodule_size := ifelse(size >= 10,"10mm or larger","less than 10mm")]
-DTs = DT[nodule_size == "10mm or larger"]
-a6a <- mrmc(empirical_auc(isCancer, rating),
-            test = test,
-            reader = reader,
-            case = index,
-            data = DTs, 
-            method = "DeLong",  
-            design = 1)
-
-su = summary(a6a)
-tms = su$test_means
-tdsa = su$test_diffs
-m0a <- printfn(tms[1,'Estimate'],tms[1,'CI'][1],tms[1,'CI'][2],scale = 100)
-m1a <- printfn(tms[2,'Estimate'],tms[2,'CI'][1],tms[2,'CI'][2],scale = 100)
-d1a <- printfn(tdsa$Estimate,tdsa$CI[,'Upper'],tdsa$CI[,'Lower'],scale = -100)
-
-
 DTs = DT[nodule_size == "less than 10mm"]
-a6b <- mrmc(empirical_auc(isCancer, rating),
+a6a <- mrmc(empirical_auc(isCancer, rating),
             test = test,
             reader = reader,
             case = index,
@@ -90,15 +73,31 @@ a6b <- mrmc(empirical_auc(isCancer, rating),
 
 
 # these are the estimates overall AUC's 
+su = summary(a6a)
+tms = su$test_means
+tdsa = su$test_diffs
+m0a <- printfn(tms[1,'Estimate'],tms[1,'CI'][1],tms[1,'CI'][2],scale = 100)
+m1a <- printfn(tms[2,'Estimate'],tms[2,'CI'][1],tms[2,'CI'][2],scale = 100)
+d1a <- printfn(tdsa$Estimate,tdsb$CI[,'Upper'],tdsb$CI[,'Lower'],scale = -100)
+
+DTs = DT[nodule_size == "10mm or larger"]
+a6b <- mrmc(empirical_auc(isCancer, rating),
+            test = test,
+            reader = reader,
+            case = index,
+            data = DTs, 
+            method = "DeLong",  
+            design = 1)
+
 su = summary(a6b)
 tms = su$test_means
 tdsb = su$test_diffs
 m0b <- printfn(tms[1,'Estimate'],tms[1,'CI'][1],tms[1,'CI'][2],scale = 100)
 m1b <- printfn(tms[2,'Estimate'],tms[2,'CI'][1],tms[2,'CI'][2],scale = 100)
-d1b <- printfn(tdsb$Estimate,tdsb$CI[,'Upper'],tdsb$CI[,'Lower'],scale = -100)
+d1b <- printfn(tdsb$Estimate,tdsa$CI[,'Upper'],tdsa$CI[,'Lower'],scale = -100)
 
 
-diff = (tdsa$Estimate - tdsb$Estimate)*100
+diff = (tdsb$Estimate - tdsa$Estimate)*100
 std.err = sqrt(tdsa$StdErr^2 + tdsb$StdErr^2)
 dfs = tdsb$df + tdsa$df
 tstat = abs((diff/100)/std.err)
@@ -106,8 +105,8 @@ pv = (1 - pt(tstat,dfs))*2
 
 
 ft2 = data.frame(Variable = c("5 to <10",">= 10 to <=30"), 
-                 m1 = c(m0b,m0a), 
-                 m0 = c(m1b,m1a),
+                 m0 = c(m0a,m0b), 
+                 m1 = c(m1a,m1b),
                  delta = c(d1b,d1a),
                  diff = c(diff,diff),
                  p = c(pv,pv))
@@ -115,7 +114,7 @@ ft2 = data.frame(Variable = c("5 to <10",">= 10 to <=30"),
 
 # Nodule density  -----------------------------------------------
 
-DTs = DT[isMixed == 1]
+DTs = DT[partSolid == 1]
 a7a <- mrmc(empirical_auc(isCancer, rating),
             test = test,
             reader = reader,
@@ -132,7 +131,7 @@ m1a <- printfn(tms[2,'Estimate'],tms[2,'CI'][1],tms[2,'CI'][2],scale = 100)
 d1a <- printfn(tdsa$Estimate,tdsa$CI[,'Upper'],tdsa$CI[,'Lower'],scale = -100)
 
 
-DTs = DT[isMixed==0]
+DTs = DT[partSolid==0]
 a7b <- mrmc(empirical_auc(isCancer, rating),
             test = test,
             reader = reader,
@@ -264,9 +263,9 @@ tstat = abs((diff/100)/std.err)
 pv = (1 - pt(tstat,dfs))*2
 
 ft5 = data.frame(Variable = c("Diagnostic","Screening"), 
-                 m0 = c(m0b,m0a),
-                 m1 = c(m1b,m1a), 
-                 delta = c(d1b,d1a),
+                 m0 = c(m0a,m0b),
+                 m1 = c(m1a,m1b), 
+                 delta = c(d1a,d1b),
                  diff = c(diff,diff),
                  p = c(pv,pv))
 
@@ -294,9 +293,6 @@ FT <- FT %>%
   colformat_double(j = 6, digits = 3) %>%
   border_inner_h() %>% 
   autofit()
-
-FT
-
 
 # Send to Officer ---------------------------------------------------------
 
