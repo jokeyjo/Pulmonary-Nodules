@@ -4,7 +4,7 @@
 // age=age in years
 // male=female vs male
 // dia10=<10mm vs >=10mm
-// subsolid=solid vs part-solid
+// density=solid vs mixed vs part-solid
 // spiculated=non-spiculated vs spiculated
 // screening=diagnostic vs screening
 // thick=<1.5mm vs >=1.5mm
@@ -14,7 +14,7 @@ table1_mc, by(cancer) ///
 	vars(age conts \ ///
 	male cat \ ///
 	dia10 cat \ ///
-	subsolid cat \ ///
+	density cat \ ///
 	spiculated cat \ ///
 	screening cat \ ///
 	thick cat) ///
